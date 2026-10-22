@@ -1,0 +1,39 @@
+{
+  "name": "@reelio/remotion-comps",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./root": {
+      "types": "./dist/root.d.ts",
+      "import": "./dist/root.js",
+      "default": "./dist/root.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint src"
+  },
+  "dependencies": {
+    "@reelio/timeline-schema": "workspace:*",
+    "remotion": "4.0.537"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.8",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "typescript": "^5.7.3"
+  }
+}
