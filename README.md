@@ -2,9 +2,12 @@
 
 AI video editor for short-form vertical video. The editor changes a versioned JSON timeline. Remotion renders that same document for preview and export.
 
-## Phase 0
+## Current build
 
-This revision contains the monorepo, the timeline schema and patch engine, a Remotion composition, the API health server, Docker services, and CI.
+- Phase 0: monorepo, timeline schema and patch engine, Remotion composition, API health server, Docker services, CI.
+- Phase 1: email and password auth, Google OAuth when configured, project dashboard, Mongo models.
+
+Sign up at http://localhost:3000/signup. Outside production, the API response includes the verification link when SMTP is unset, and the signup page follows it. MongoDB must be running.
 
 ## Requirements
 

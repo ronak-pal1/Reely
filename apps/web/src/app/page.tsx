@@ -6,7 +6,15 @@ export default function HomePage() {
     <main className="mx-auto flex min-h-screen max-w-5xl flex-col gap-10 px-6 py-8">
       <header className="flex items-center justify-between">
         <div className="text-sm font-semibold tracking-[0.22em]">REELIO</div>
-        <ThemeToggle />
+        <div className="flex items-center gap-3 text-sm">
+          <a href="/login" className="text-mute">
+            Sign in
+          </a>
+          <a href="/dashboard" className="rounded-full bg-accent px-3 py-1.5 text-white">
+            Open studio
+          </a>
+          <ThemeToggle />
+        </div>
       </header>
       <section className="grid items-center gap-10 md:grid-cols-[1.1fr_0.9fr]">
         <div>

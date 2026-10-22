@@ -1,3 +1,6 @@
+import type { HydratedDocument } from "mongoose";
+import type { UserDoc } from "./models.js";
+
 export {};
 
 declare global {
@@ -6,6 +9,7 @@ declare global {
   namespace Express {
     interface Request {
       id: string;
+      user?: HydratedDocument<UserDoc>;
     }
   }
 }
