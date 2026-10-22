@@ -10,6 +10,7 @@ import { logger } from "./logger.js";
 import { requireCsrf } from "./middleware/csrf.js";
 import { errorHandler } from "./middleware/error.js";
 import { requestId } from "./middleware/requestId.js";
+import { assetRouter } from "./routes/assets.js";
 import { authRouter } from "./routes/auth.js";
 import { projectRouter } from "./routes/projects.js";
 import { templateRouter } from "./routes/templates.js";
@@ -72,6 +73,7 @@ export function createApp() {
       requestId: req.id,
     });
   });
+  app.use("/assets", assetRouter);
   app.use("/auth", authRouter);
   app.use("/users", userRouter);
   app.use("/projects", projectRouter);

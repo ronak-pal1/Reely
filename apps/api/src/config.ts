@@ -20,6 +20,15 @@ const EnvSchema = z.object({
   SMTP_USER: z.string().default(""),
   SMTP_PASS: z.string().default(""),
   SMTP_FROM: z.string().default("REELIO <noreply@example.com>"),
+  STORAGE_DRIVER: z.enum(["local", "s3"]).default("local"),
+  DATA_DIR: z.string().default("data"),
+  MAX_UPLOAD_BYTES: z.coerce.number().int().positive().default(524_288_000),
+  S3_ENDPOINT: z.string().default(""),
+  S3_REGION: z.string().default("us-east-1"),
+  S3_BUCKET: z.string().default("reelio"),
+  S3_ACCESS_KEY_ID: z.string().default(""),
+  S3_SECRET_ACCESS_KEY: z.string().default(""),
+  S3_FORCE_PATH_STYLE: z.enum(["true", "false"]).default("true"),
 });
 
 export type AppConfig = z.infer<typeof EnvSchema>;

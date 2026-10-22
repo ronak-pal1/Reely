@@ -120,7 +120,9 @@ export default function DashboardPage() {
           {projects.map((project) => (
             <article key={project.id} className="rounded-xl border border-line bg-surface p-4">
               <div className="aspect-[9/16] max-h-40 rounded-lg bg-black" />
-              <h2 className="mt-3 font-medium">{project.name}</h2>
+              <h2 className="mt-3 font-medium">
+                <Link href={`/projects/${project.id}`}>{project.name}</Link>
+              </h2>
               <p className="text-xs text-mute">
                 {project.aspect} · {new Date(project.updatedAt).toLocaleString()}
               </p>
