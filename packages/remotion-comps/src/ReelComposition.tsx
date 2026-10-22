@@ -28,6 +28,11 @@ function mediaStart(clip: Clip): number {
   return Math.max(0, Math.round(clip.trimStart));
 }
 
+function playableSrc(src: string | undefined): string | undefined {
+  if (!src || src.startsWith("asset:")) return undefined;
+  return src;
+}
+
 function ClipBody({ clip, track }: { clip: Clip; track: Track }) {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -39,6 +44,7 @@ function ClipBody({ clip, track }: { clip: Clip; track: Track }) {
   const enter = transitionOpacity(clip, frame, "in");
   const exit = transitionOpacity(clip, frame, "out");
   const slide = transitionOffset(clip, frame);
+  const src = playableSrc(clip.src);
 
   return (
     <AbsoluteFill
@@ -49,20 +55,31 @@ function ClipBody({ clip, track }: { clip: Clip; track: Track }) {
     >
       <AbsoluteFill style={filterStyle}>
         {track.type === "video" ? (
-          clip.src ? (
-            <OffthreadVideo
-              src={clip.src}
-              startFrom={mediaStart(clip)}
-              playbackRate={clip.speed}
-              volume={volume}
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            />
-          ) : (
-            <AbsoluteFill style={{ background: clip.props.backgroundColor ?? "#111111" }} />
-          )
+          <AbsoluteFill
+            style={{
+              transform: `translate(${transform.x}px, ${transform.y}px) scale(${transform.scale}) rotate(${transform.rotate}deg)`,
+            }}
+          >
+            {src ? (
+              <OffthreadVideo
+                src={src}
+                startFrom={mediaStart(clip)}
+                playbackRate={clip.speed}
+                volume={volume}
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
+            ) : (
+              <AbsoluteFill style={{ background: clip.props.backgroundColor ?? "#111111" }} />
+            )}
+          </AbsoluteFill>
         ) : null}
-        {track.type === "audio" && clip.src ? (
-          <Audio src={clip.src} startFrom={mediaStart(clip)} playbackRate={clip.speed} volume={volume} />
+        {track.type === "audio" && src ? (
+          <Audio
+            src={src}
+            startFrom={mediaStart(clip)}
+            playbackRate={clip.speed}
+            volume={volume}
+          />
         ) : null}
         {track.type === "sticker" ? <Sticker clip={clip} transform={transform} /> : null}
         {track.type === "text" || track.type === "caption" ? (
@@ -226,8 +243,9 @@ function Sticker({
   clip: Clip;
   transform: { x: number; y: number; scale: number; rotate: number };
 }) {
-  const content = clip.props.imageSrc ? (
-    <Img src={clip.props.imageSrc} style={{ width: 180, height: 180, objectFit: "contain" }} />
+  const imageSrc = playableSrc(clip.props.imageSrc);
+  const content = imageSrc ? (
+    <Img src={imageSrc} style={{ width: 180, height: 180, objectFit: "contain" }} />
   ) : (
     <div style={{ fontSize: 120, lineHeight: 1 }}>{clip.props.sticker ?? "✦"}</div>
   );

@@ -83,3 +83,13 @@ export async function api<T>(path: string, init: RequestInit = {}, retry = true)
   }
   return data as T;
 }
+
+export async function uploadBinary(url: string, body: Blob, contentType: string): Promise<void> {
+  const headers = new Headers({ "content-type": contentType });
+  if (url.startsWith(baseUrl())) headers.set("x-csrf-token", await ensureCsrf());
+  const response = await fetch(url, { method: "PUT", body, headers, credentials: "include" });
+  if (!response.ok) {
+    const data = (await response.json().catch(() => ({}))) as { error?: { message?: string } };
+    throw new ApiError(response.status, data.error?.message ?? "Upload failed");
+  }
+}

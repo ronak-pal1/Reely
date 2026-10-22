@@ -12,6 +12,7 @@ export const ALLOWED_MEDIA_TYPES = new Set([
   "audio/mpeg",
   "audio/wav",
   "audio/mp4",
+  "audio/webm",
   "image/png",
   "image/jpeg",
   "image/webp",
