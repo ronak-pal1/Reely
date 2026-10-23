@@ -1,0 +1,16 @@
+node_modules
+dist
+.next
+coverage
+.turbo
+.env
+.env.local
+*.log
+data/
+dump.rdb
+tmp/
+.DS_Store
+playwright-report
+test-results
+tsconfig.tsbuildinfo
+.vercel
